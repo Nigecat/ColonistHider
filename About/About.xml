@@ -24,6 +24,7 @@
         <li>CrashM.ColorCodedMoodBar.11</li>
     </loadBefore>
     <loadAfter>
+		<li>brrainz.harmony</li>
         <li>UnlimitedHugs.HugsLib</li>
     </loadAfter>
 </ModMetaData>
