@@ -13,7 +13,7 @@ namespace ColonistHider
     [HarmonyPatch(nameof(ColonistBarColonistDrawer.DrawColonist))]
     public static class ColonistBarColonistDrawer_DrawColonist
     {
-        public static void Prefix(ColonistBarColonistDrawer __instance, Rect rect, Pawn colonist, Map pawnMap)
+        public static void Prefix(Rect rect, Pawn colonist)
         {
             if (Mouse.IsOver(rect) && Input.GetMouseButtonDown(1))
             {
@@ -21,7 +21,7 @@ namespace ColonistHider
                 {
                     new FloatMenuOption("Hide", () =>
                     {
-                        pawnMap.GetComponent<Config>().AddToBlacklist(colonist);
+                        Find.World.GetComponent<Config>().AddToBlacklist(colonist);
                         ColonistBar_ColonistBarOnGUI.MarkDirty();
                     })
                 }));
@@ -55,9 +55,9 @@ namespace ColonistHider
     [HarmonyPatch("CheckRecacheEntries")]
     public static class ColonistBar_CheckRecacheEntries
     {
-        private static List<Pawn> Purge(List<Pawn> pawns, Map map)
+        private static List<Pawn> Purge(List<Pawn> pawns)
         {
-            Config config = map.GetComponent<Config>();
+            Config config = Find.World.GetComponent<Config>();
             return pawns.Where(pawn => !config.IsPawnBlacklisted(pawn)).ToList();
         }
 
@@ -83,7 +83,7 @@ namespace ColonistHider
 
                     // ======================= MODIFICATIONS BEGIN HERE =======================
                     // ___tmpPawns.AddRange(___tmpMaps[i].mapPawns.FreeColonists);
-                    ___tmpPawns.AddRange(Purge(___tmpMaps[i].mapPawns.FreeColonists, ___tmpMaps[i]));
+                    ___tmpPawns.AddRange(Purge(___tmpMaps[i].mapPawns.FreeColonists));
                     // ======================= MODIFICATIONS  END  HERE =======================
 
 

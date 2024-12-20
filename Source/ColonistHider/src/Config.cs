@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using RimWorld.Planet;
 using Verse;
 
 namespace ColonistHider
 {
-    public class Config : MapComponent
+    public class Config : WorldComponent
     {
         public bool Enabled = true;
 
@@ -15,12 +16,12 @@ namespace ColonistHider
             get
             {
                 return Enabled && !_blacklist.NullOrEmpty()
-                    ? _blacklist.Select(id => Find.CurrentMap.mapPawns.AllPawns.Find(pawn => pawn.ThingID == id)).ToList()
+                    ? _blacklist.Select(id => Find.World.PlayerPawnsForStoryteller.ToList().Find(pawn => pawn.ThingID == id)).ToList()
                     : new List<Pawn>();
             }
         }
 
-        public Config(Map map) : base(map)
+        public Config(World world) : base(world)
         {
 
         }
@@ -35,20 +36,15 @@ namespace ColonistHider
 
         public bool IsPawnBlacklisted(Pawn pawn)
         {
-            if (Enabled)
-            {
-                return _blacklist.Contains(pawn.ThingID);
-            }
-            else
-            {
-                return false;
-            }
+            return Enabled && _blacklist.Contains(pawn.ThingID);
         }
 
         public void AddToBlacklist(Pawn pawn)
         {
-            // fixme this may add duplicate entries 
-            _blacklist.Add(pawn.ThingID);
+            if (!IsPawnBlacklisted(pawn))
+            {
+                _blacklist.Add(pawn.ThingID);
+            }
         }
 
         public void RemoveFromBlacklist(Pawn pawn)

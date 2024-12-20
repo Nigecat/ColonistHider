@@ -11,7 +11,7 @@ namespace ColonistHider
             new Harmony(SettingsCategory()).PatchAll();
         }
 
-        public override string SettingsCategory() => "ColonistHider";
+        public override string SettingsCategory() => "!ColonistHider";
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
@@ -19,15 +19,13 @@ namespace ColonistHider
 
             settings.Begin(inRect);
 
-            Map map = Find.CurrentMap;
-
-            if (map == null)
+            if (Find.World == null)
             {
-                settings.Label("Settings are only accessible when a map is loaded.");
+                settings.Label("Settings are only accessible when a save is loaded.");
             }
             else
             {
-                Config config = map.GetComponent<Config>();
+                Config config = Find.World.GetComponent<Config>();
 
                 bool wasEnabled = config.Enabled;
                 settings.CheckboxLabeled("Enabled", ref config.Enabled, "Disabling this will display all colonists.");
