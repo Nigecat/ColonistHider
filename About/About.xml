@@ -3,8 +3,9 @@
     <name>Colonist Hider</name>
     <author>Nigecat</author>
     <packageId>Nigecat.ColonistHider</packageId>
+
     <supportedVersions>
-        <li>1.4</li>
+        <li>1.5</li>
     </supportedVersions>
 
     <description>
@@ -14,17 +15,22 @@
 
     <modDependencies>
         <li>
-            <packageId>UnlimitedHugs.HugsLib</packageId>
-            <displayName>HugsLib</displayName>
-            <downloadUrl>https://github.com/UnlimitedHugs/RimworldHugsLib/releases/latest</downloadUrl>
-            <steamWorkshopUrl>steam://url/CommunityFilePage/818773962</steamWorkshopUrl>
+            <packageId>brrainz.harmony</packageId>
+            <displayName>Harmony</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+            <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
         </li>
     </modDependencies>
+
+    <incompatibleWith>
+        <li>derekbickley.ltocolonygroupsfinal</li>
+    </incompatibleWith>
+
     <loadBefore>
         <li>CrashM.ColorCodedMoodBar.11</li>
     </loadBefore>
+
     <loadAfter>
 		<li>brrainz.harmony</li>
-        <li>UnlimitedHugs.HugsLib</li>
     </loadAfter>
 </ModMetaData>
