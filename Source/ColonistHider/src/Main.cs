@@ -18,7 +18,6 @@ namespace ColonistHider
             Listing_Standard settings = new Listing_Standard();
 
             settings.Begin(inRect);
-            // settings.ColumnWidth = 270f;
 
             Map map = Find.CurrentMap;
 
@@ -41,7 +40,7 @@ namespace ColonistHider
                 {
                     settings.Label(pawn.Name.ToStringShort);
 
-                    if (Widgets.ButtonText(new Rect(inRect.xMax - 110, settings.CurHeight, 100, 30), "Show"))
+                    if (Widgets.ButtonText(new Rect(inRect.xMax - 110, settings.CurHeight - 25, 100, 30), "Show"))
                     {
                         config.RemoveFromBlacklist(pawn);
                         ColonistBar_ColonistBarOnGUI.MarkDirty();
