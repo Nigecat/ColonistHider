@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using RimWorld;
@@ -72,7 +73,7 @@ namespace ColonistHider
             {
                 ___cachedEntries.RemoveWhere((entry) => config.IsHidden(entry.pawn));
                 ___drawer.Notify_RecachedEntries();
-                ___drawLocsFinder.CalculateDrawLocs(___cachedDrawLocs, out ___cachedScale, ___cachedEntries.Count);
+                ___drawLocsFinder.CalculateDrawLocs(___cachedDrawLocs, out ___cachedScale, ___cachedEntries.Select((entry) => entry.group).Max() + 1);
             }
         }
     }
