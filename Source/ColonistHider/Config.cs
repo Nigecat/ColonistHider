@@ -6,8 +6,8 @@ namespace ColonistHider
 {
     public class Config : WorldComponent
     {
-        public bool Enabled = true;
-        public HashSet<string> Blacklist = new();
+        public bool Enabled { get; private set; } = true;
+        private HashSet<string> Blacklist = new();
 
         public static Config Current
         {
@@ -24,6 +24,7 @@ namespace ColonistHider
             if (KeyBindings.Toggle != null && KeyBindings.Toggle.JustPressed)
             {
                 Enabled = !Enabled;
+                Refresh();
             }
         }
 
@@ -35,11 +36,23 @@ namespace ColonistHider
         public void Hide(Pawn pawn)
         {
             Blacklist.Add(pawn.GetUniqueLoadID());
+            Refresh();
         }
 
         public void Show(Pawn pawn)
         {
             Blacklist.Remove(pawn.GetUniqueLoadID());
+            Refresh();
+        }
+
+        public bool IsHidden(Pawn pawn)
+        {
+            return Blacklist.Contains(pawn.GetUniqueLoadID());
+        }
+
+        public void Refresh()
+        {
+            ColonistBar_ColonistBarOnGUI.MarkDirty();
         }
     }
 }
