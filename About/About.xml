@@ -23,11 +23,9 @@
     </modDependencies>
 
     <incompatibleWith>
-        <li>derekbickley.ltocolonygroupsfinal</li>
     </incompatibleWith>
 
     <loadBefore>
-        <li>CrashM.ColorCodedMoodBar.11</li>
     </loadBefore>
 
     <loadAfter>
