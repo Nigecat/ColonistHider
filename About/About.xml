@@ -5,7 +5,7 @@
     <packageId>Nigecat.ColonistHider</packageId>
 
     <supportedVersions>
-        <li>1.5</li>
+        <li>1.6</li>
     </supportedVersions>
 
     <description>
@@ -23,11 +23,9 @@
     </modDependencies>
 
     <incompatibleWith>
-        <li>derekbickley.ltocolonygroupsfinal</li>
     </incompatibleWith>
 
     <loadBefore>
-        <li>CrashM.ColorCodedMoodBar.11</li>
     </loadBefore>
 
     <loadAfter>

@@ -1,1 +1,0 @@
-add a keyboard shortcut (\) to temporary disable the colonist hiding
