@@ -27,6 +27,21 @@ namespace ColonistHider
         }
     }
 
+    [HarmonyPatch(typeof(ColonistBarColonistDrawer))]
+    [HarmonyPatch(nameof(ColonistBarColonistDrawer.DrawColonist))]
+    public static class ColonistBarColonistDrawer_DrawColonist
+    {
+        public static void Postfix(Rect rect, Pawn colonist)
+        {
+            Config config = Config.Current;
+
+            if (!config.Enabled && config.IsHidden(colonist))
+            {
+                Widgets.DrawBoxSolid(rect, Color.gray.ToTransparent(0.4f));
+            }
+        }
+    }
+
     [HarmonyPatch(typeof(ColonistBar))]
     [HarmonyPatch(nameof(ColonistBar.ColonistBarOnGUI))]
     public static class ColonistBar_ColonistBarOnGUI
