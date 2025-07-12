@@ -16,7 +16,7 @@
             <ExcludeAssets>runtime</ExcludeAssets>
         </PackageReference>
         <PackageReference Include="Krafs.Rimworld.Ref">
-            <Version>1.6.4495-beta</Version>
+            <Version>1.6.4518</Version>
             <ExcludeAssets>runtime</ExcludeAssets>
         </PackageReference>
     </ItemGroup>

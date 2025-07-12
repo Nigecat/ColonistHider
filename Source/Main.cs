@@ -1,4 +1,5 @@
-﻿using Verse;
+﻿using HarmonyLib;
+using Verse;
 
 namespace ColonistHider
 {
@@ -6,7 +7,7 @@ namespace ColonistHider
     {
         public Mod(ModContentPack content) : base(content)
         {
-       
+            new Harmony("Nigecat.ColonistHider").PatchAll();
         }
     }
 }
