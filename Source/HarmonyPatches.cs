@@ -8,6 +8,10 @@ using Verse;
 
 namespace ColonistHider
 {
+    /// <summary>
+    /// Patch for the map control widgets.
+    /// This adds an extra widget with a toggle for the <c>Config.Disabled</c> property.
+    /// </summary>
     [HarmonyPatch(typeof(PlaySettings))]
     [HarmonyPatch("DoMapControls")]
     public static class PlaySettings_DoMapControls
@@ -24,6 +28,10 @@ namespace ColonistHider
 
     // ------------------------------------------------------------------------------------------------------
 
+    /// <summary>
+    /// Patch for the colonist bar event handler.
+    /// This adds a "Show" right-click button if a colonist is hidden, and a "Hide" button if they are not.
+    /// </summary>
     [HarmonyPatch(typeof(ColonistBarColonistDrawer))]
     [HarmonyPatch(nameof(ColonistBarColonistDrawer.HandleClicks))]
     public static class ColonistBarColonistDrawer_HandleClicks
@@ -45,10 +53,18 @@ namespace ColonistHider
 
     // ------------------------------------------------------------------------------------------------------
 
+    /// <summary>
+    /// Patch for the colonist bar draw cache.
+    /// This allows the <c>Config</c> class to request a redraw/recache of the colonist bar when necessary.
+    /// </summary>
     [HarmonyPatch(typeof(ColonistBar))]
     [HarmonyPatch(nameof(ColonistBar.ColonistBarOnGUI))]
     public static class ColonistBar_ColonistBarOnGUI
     {
+        /// <summary>
+        /// Whether the colonist bar is dirty.
+        /// Setting this to <c>true</c> will cause it to be recached then reset to <c>false</c> the next update.
+        /// </summary>
         private static bool Dirty = true;
 
         public static void Prefix(ColonistBar __instance)
@@ -69,6 +85,10 @@ namespace ColonistHider
 
     // ------------------------------------------------------------------------------------------------------
 
+    /// <summary>
+    /// Patch for colonist bar entry cacher.
+    /// This will take into account our hidden pawns and filter them out of the display list.
+    /// </summary>
     [HarmonyPatch(typeof(ColonistBar))]
     [HarmonyPatch("CheckRecacheEntries")]
     public static class ColonistBar_CheckRecacheEntries
@@ -100,6 +120,10 @@ namespace ColonistHider
 
     // ------------------------------------------------------------------------------------------------------
 
+    /// <summary>
+    /// Patch for the colonist bar drawer.
+    /// This will add an indicator to all hidden colonists when they are visible (through <c>Config.Disabled</c>).
+    /// </summary>
     [HarmonyPatch(typeof(ColonistBarColonistDrawer))]
     [HarmonyPatch(nameof(ColonistBarColonistDrawer.DrawColonist))]
     public static class ColonistBarColonistDrawer_DrawColonist
