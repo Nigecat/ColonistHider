@@ -29,6 +29,6 @@
     </loadBefore>
 
     <loadAfter>
-		<li>brrainz.harmony</li>
+	<li>brrainz.harmony</li>
     </loadAfter>
 </ModMetaData>
