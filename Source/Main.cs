@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using Multiplayer.API;
 using Verse;
 
 namespace ColonistHider

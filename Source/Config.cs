@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Multiplayer.API;
 using RimWorld.Planet;
 using Verse;
 
@@ -30,9 +31,15 @@ namespace ColonistHider
         }
 
         /// <summary>
-        /// The current list of hidden pawns, tracked by their <c>GetUniqueLoadID()</c> value.
+        /// The current list of hidden pawns, tracked by their <c>GetUniqueLoadID()</c> value and mapped by player name.
         /// </summary>
         private HashSet<string> Hidden = new();
+
+        /// <summary>
+        /// The current list of hidden pawns for non-host players in multiplayer.
+        /// These are mapped by player name.
+        /// </summary>
+        private Dictionary<string, HashSet<string>> ExternalHidden = new();
 
         /// <summary>
         /// Get the current config instance for this world.
@@ -59,6 +66,7 @@ namespace ColonistHider
         {
             Scribe_Values.Look(ref _disabled, "disabled");
             Scribe_Collections.Look(ref Hidden, "hidden", LookMode.Value);
+            Scribe_Collections.Look(ref ExternalHidden, "hidden_external", LookMode.Value);
         }
 
         /// <summary>
@@ -67,7 +75,18 @@ namespace ColonistHider
         /// <param name="pawn">The pawn to hide.</param>
         public void Hide(Pawn pawn)
         {
-            Hidden.Add(pawn.GetUniqueLoadID());
+            string id = pawn.GetUniqueLoadID();
+
+            if (!MP.enabled || MP.IsHosting)
+            {
+                Hidden.Add(id);
+            }
+            else
+            {
+                ExternalHidden.TryAdd(MP.PlayerName, new());
+                ExternalHidden[MP.PlayerName].Add(id);
+            }
+
             Refresh();
         }
 
@@ -77,7 +96,18 @@ namespace ColonistHider
         /// <param name="pawn">The pawn to show.</param>
         public void Show(Pawn pawn)
         {
-            Hidden.Remove(pawn.GetUniqueLoadID());
+            string id = pawn.GetUniqueLoadID();
+
+            if (!MP.enabled || MP.IsHosting)
+            {
+                Hidden.Remove(id);
+            }
+            else
+            {
+                ExternalHidden.TryAdd(MP.PlayerName, new());
+                ExternalHidden[MP.PlayerName].Remove(id);
+            }
+
             Refresh();
         }
 
@@ -89,7 +119,17 @@ namespace ColonistHider
         /// <returns>Whether the pawn is hidden.</returns>
         public bool IsHidden(Pawn pawn)
         {
-            return Hidden.Contains(pawn.GetUniqueLoadID());
+            string id = pawn.GetUniqueLoadID();
+
+            if (!MP.enabled || MP.IsHosting)
+            {
+                return Hidden.Contains(id);
+            }
+            else
+            {
+                ExternalHidden.TryAdd(MP.PlayerName, new());
+                return ExternalHidden[MP.PlayerName].Contains(id);
+            }
         }
 
         /// <summary>
