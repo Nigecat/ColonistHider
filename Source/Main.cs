@@ -7,7 +7,7 @@ namespace ColonistHider
     {
         public Mod(ModContentPack content) : base(content)
         {
-            new Harmony("Nigecat.ColonistHider").PatchAll();
+            new Harmony("nigecat.colonisthider").PatchAll();
         }
     }
 }

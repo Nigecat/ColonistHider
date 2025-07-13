@@ -2,7 +2,7 @@
 <ModMetaData>
     <name>Colonist Hider</name>
     <author>Nigecat</author>
-    <packageId>Nigecat.ColonistHider</packageId>
+    <packageId>nigecat.colonisthider</packageId>
 
     <supportedVersions>
         <li>1.6</li>
