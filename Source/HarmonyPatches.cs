@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -111,31 +112,37 @@ namespace ColonistHider
 
             if (__state && !config.Disabled)
             {
-                ___cachedEntries.RemoveWhere((entry) => config.IsHidden(entry.pawn));
-                ___drawer.Notify_RecachedEntries();
-                ___drawLocsFinder.CalculateDrawLocs(___cachedDrawLocs, out ___cachedScale, ___cachedEntries.Select((entry) => entry.group).Max() + 1);
+                try
+                {
+                    ___cachedEntries.RemoveWhere((entry) => config.IsHidden(entry.pawn));
+                    ___drawer.Notify_RecachedEntries();
+                    ___drawLocsFinder.CalculateDrawLocs(___cachedDrawLocs, out ___cachedScale, ___cachedEntries.Select((entry) => entry.group).Max() + 1);
+                }
+                catch (Exception)
+                {
+                }
             }
         }
     }
 
     // ------------------------------------------------------------------------------------------------------
 
-    /// <summary>
-    /// Patch for the colonist bar drawer.
-    /// This will add an indicator to all hidden colonists when they are visible (through <c>Config.Disabled</c>).
-    /// </summary>
-    [HarmonyPatch(typeof(ColonistBarColonistDrawer))]
-    [HarmonyPatch(nameof(ColonistBarColonistDrawer.DrawColonist))]
-    public static class ColonistBarColonistDrawer_DrawColonist
-    {
-        public static void Postfix(Rect rect, Pawn colonist)
-        {
-            Config config = Config.Current;
+    // /// <summary>
+    // /// Patch for the colonist bar drawer.
+    // /// This will add an indicator to all hidden colonists when they are visible (through <c>Config.Disabled</c>).
+    // /// </summary>
+    // [HarmonyPatch(typeof(ColonistBarColonistDrawer))]
+    // [HarmonyPatch(nameof(ColonistBarColonistDrawer.DrawColonist))]
+    // public static class ColonistBarColonistDrawer_DrawColonist
+    // {
+    //     public static void Postfix(Rect rect, Pawn colonist)
+    //     {
+    //         Config config = Config.Current;
 
-            if (config.Disabled && config.IsHidden(colonist))
-            {
-                Widgets.DrawBoxSolid(rect, Color.gray.ToTransparent(0.4f));
-            }
-        }
-    }
+    //         if (config.Disabled && config.IsHidden(colonist))
+    //         {
+    //             Widgets.DrawBoxSolid(rect, Color.gray.ToTransparent(0.4f));
+    //         }
+    //     }
+    // }
 }
